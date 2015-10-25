@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour
 		if (otherCollider.gameObject.CompareTag ("Platform")) {
 			this.grounded = true;
 		}
+
 	}
 	
 	// private methods
