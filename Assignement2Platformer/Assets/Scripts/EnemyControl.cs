@@ -56,7 +56,7 @@ public class EnemyControl : MonoBehaviour {
 	}
 
 	//checks if the player collided with the circle collider.
-	void OnTriggerEnter2D(CircleCollider2D otherCollider){
+	void OnCircleColliderEnter2D(CircleCollider2D otherCollider){
 		if (otherCollider.gameObject.CompareTag ("Player")) {
 			Destroy(gameObject);
 		}

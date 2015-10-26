@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
 	//creates an array of audiosources
 	private AudioSource[] myAudioSources;
 	private AudioSource itempickup;
+	private AudioSource zombierawr;
+	private AudioSource flag;
 	
 	
 	//sets the value to check if the player is moving.
@@ -51,7 +53,9 @@ public class PlayerController : MonoBehaviour
 		this.animator = gameObject.GetComponent<Animator> ();
 
 		this.myAudioSources = gameObject.GetComponents<AudioSource> ();
-		this.itempickup = this.myAudioSources [0];
+		this.itempickup = this.myAudioSources [1];
+		this.zombierawr = this.myAudioSources [3];
+		this.flag = this.myAudioSources [2];
 		
 		
 	}
@@ -127,6 +131,14 @@ public class PlayerController : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D othercollider){
 		if (othercollider.gameObject.CompareTag ("MedPack")) {
 			this.itempickup.Play();
+		}
+
+		if (othercollider.gameObject.CompareTag ("Enemy")) {
+			this.zombierawr.Play();
+		}
+
+		if (othercollider.gameObject.CompareTag ("EndFlag")) {
+			this.flag.Play();
 		}
 	}
 	
