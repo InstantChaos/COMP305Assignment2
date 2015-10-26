@@ -39,7 +39,7 @@ public class EnemyControl : MonoBehaviour {
 		if (this.ground) {
 			//plays the walking animation
 			this.anim.SetInteger ("AnimState", 1);
-			this.rigidbody.velocity = new Vector2(this.trans.localScale.x, 0) * this.speed;
+			this.rigidbody.velocity = new Vector2(this.trans.localScale.x, 0) * -this.speed;
 
 			//draws the enemy's line of sight
 			this.moreground = Physics2D.Linecast(this.sightStart.position,this.sightEnd.position, 1 << LayerMask.NameToLayer("Solid"));
@@ -61,6 +61,7 @@ public class EnemyControl : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
+
 
 	//checks if the enemy is on the ground.
 	void OnCollisionStay2D(Collision2D otherCollider) {

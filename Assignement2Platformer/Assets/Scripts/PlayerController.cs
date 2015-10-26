@@ -53,8 +53,8 @@ public class PlayerController : MonoBehaviour
 		this.animator = gameObject.GetComponent<Animator> ();
 
 		this.myAudioSources = gameObject.GetComponents<AudioSource> ();
-		this.itempickup = this.myAudioSources [1];
-		this.zombierawr = this.myAudioSources [3];
+		this.itempickup = this.myAudioSources [0];
+		this.zombierawr = this.myAudioSources [1];
 		this.flag = this.myAudioSources [2];
 		
 		
