@@ -11,7 +11,7 @@ using System.Collections;
 public class VelocityRange
 {
 	public float vMin, vMax;
-
+	
 	public VelocityRange (float vMin, float vMax)
 	{
 		this.vMin = vMin;
@@ -21,18 +21,21 @@ public class VelocityRange
 
 public class PlayerController : MonoBehaviour
 {
-
+	
 	//public variables 
 	public float speed = 20f;
 	public float jump = 200f;
-	public VelocityRange velocityRange = new VelocityRange (300f, 1000f);
+	public VelocityRange velocityRange = new VelocityRange (300f, 500f);
 	
 	//private variables
 	private Rigidbody2D rigid;
 	private Animator animator;
 	private Transform trans;
-
-
+	//creates an array of audiosources
+	private AudioSource[] myAudioSources;
+	private AudioSource itempickup;
+	
+	
 	//sets the value to check if the player is moving.
 	private float moveVal = 0;
 	//checks if the player is facing right.
@@ -45,23 +48,27 @@ public class PlayerController : MonoBehaviour
 	{
 		this.rigid = gameObject.GetComponent<Rigidbody2D> ();
 		this.trans = gameObject.GetComponent<Transform> ();
-		this.animator = gameObject.GetComponent<Animator> ();		
+		this.animator = gameObject.GetComponent<Animator> ();
 
+		this.myAudioSources = gameObject.GetComponents<AudioSource> ();
+		this.itempickup = this.myAudioSources [0];
+		
 		
 	}
 	
 	void FixedUpdate ()
 	{
+		
 		//variables to set the position of the forces
 		float forceX = 0f;
 		float forceY = 0f;
-
 		//sets the velocity with an absolute value.
 		float velX = Mathf.Abs (this.rigid.velocity.x);
 		float velY = Mathf.Abs (this.rigid.velocity.y);
 		
+		
 		this.moveVal = Input.GetAxis ("Horizontal");
-
+		
 		//checks if the player is moving
 		if (this.moveVal != 0) { 
 			//check if player is on the ground
@@ -106,13 +113,21 @@ public class PlayerController : MonoBehaviour
 		// pushes the player with the force variables set above.
 		this.rigid.AddForce (new Vector2 (forceX, forceY));
 	}
-	
-	void OnCollisionStay2D (Collision2D otherCollider)
+
+	//checks if the player lands an the ground called platform
+	void OnCollisionStay2D (Collision2D other)
 	{
-		if (otherCollider.gameObject.CompareTag ("Platform")) {
+		if (other.gameObject.CompareTag ("Platform")) {
 			this.grounded = true;
 		}
+		
+	}
 
+	//plays the itempickup sound when the player collides with the item
+	void OnCollisionEnter2D(Collision2D othercollider){
+		if (othercollider.gameObject.CompareTag ("MedPack")) {
+			this.itempickup.Play();
+		}
 	}
 	
 	// private methods
